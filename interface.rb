@@ -10,8 +10,8 @@ class Interface
 
   def run_interface
     puts 'Введите ваше имя'
-  	Player.new(gets.chomp)
-  	Dealer.new
+    Player.new(gets.chomp)
+    Dealer.new
   end
 
 end
