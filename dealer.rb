@@ -1,7 +1,7 @@
 class Dealer < Player
   def initialize 
     super
-	  @name = 'Дилер'
+    @name = 'Дилер'
   end
 
 end
