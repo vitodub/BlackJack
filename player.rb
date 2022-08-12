@@ -3,13 +3,13 @@ class Player
 
   def initialize(name) 
     @name = name
-    @bank = 100
-    @cards = {}
-    @sum = 0
+	  @bank = 100
+	  @cards = {}
+    @sum
   end
 
   def place_bet
-    @bank -= 10
+	  @bank -= 10
   end
 
   def get_cards(cards, number)
@@ -17,13 +17,12 @@ class Player
   end
 
   def check_sum
-    @cards.each_value { |value| @sum += value }
-  end
-
-  def show_cards
+    s = 0
+    @cards.each_value { |value| s += value }
+    @sum = s
   end
 
   def get_money
-    @bank += 10
+  	@bank += 10
   end
 end
