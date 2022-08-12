@@ -78,11 +78,11 @@ class Interface
     puts "Карты дилера #{@dealer.cards.keys.join(', ')} . Сумма очков дилера #{@dealer.sum}"
     puts ''
         
-    if @player.sum > @dealer.sum
+    if @player.sum > @dealer.sum || @dealer.sum > 21
       @player.get_money
       puts "Победил #{@player.name}. В вашем банке #{@player.bank}"
       
-    elsif @player.sum < @dealer.sum
+    elsif @player.sum < @dealer.sum || @player.sum > 21
       @dealer.get_money
       puts "Победил дилер. В вашем банке #{@player.bank}"      
     else
