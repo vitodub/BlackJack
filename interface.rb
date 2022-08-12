@@ -6,7 +6,7 @@ class Interface
     loop do
       run_interface
       puts ''
-      puts 'Хотите ли вы сыграть еще раз?'
+      puts "#{@player.name}, хотите ли вы сыграть еще раз?"
       play_again = gets.chomp.downcase
       break if play_again == 'нет'
     end
