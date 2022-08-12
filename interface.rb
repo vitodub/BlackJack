@@ -1,5 +1,8 @@
-lass Interface
+class Interface
   def call
+    puts 'Введите ваше имя'
+    @player_name = gets.chomp
+    
     loop do
       run_interface
       puts ''
@@ -10,14 +13,12 @@ lass Interface
   end
 
   def run_interface
-    puts 'Введите ваше имя'
+    @player = Player.new(@player_name)
+    @dealer = Dealer.new
+    @card_deck = CardDeck.new
 
-  	@player = Player.new(gets.chomp)
-  	@dealer = Dealer.new
-    card_deck = CardDeck.new
-
-    @player.get_cards(card_deck, 2)
-    @dealer.get_cards(card_deck, 2)
+    @player.get_cards(@card_deck, 2)
+    @dealer.get_cards(@card_deck, 2)
 
     @player.place_bet
     @dealer.place_bet
@@ -32,39 +33,76 @@ lass Interface
     puts '3. Открыть карты'
     puts ''
 
-    @player_choice_1 = gets.to_i
+    player_choice_1 = gets.to_i
 
-    case @player_choice_1
+    case player_choice_1
       when 1
-        puts 'Ход переходит к дилеру'
+        dealers_move
+
+        if @player.cards.size < 3
+          puts "#{@player.name}, хотите взять еще одну карту?"
+          puts ''
+          puts '1. Да'
+          puts '2. Нет'
+
+          player_choice_2 = gets.to_i
+
+          case player_choice_2
+          when 1
+            @player.get_cards(@card_deck, 1)
+          end
+          show_cards 
+        else
+          show_cards
+        end
+
       when 2
-        @player.get_cards(card_deck, 1)
-        show_stats(@player)
+        @player.get_cards(@card_deck, 1)
+        dealers_move
+        show_cards
+
       when 3
         show_cards
-    end                  
+    end                
   end
 
   def show_stats(player)
-    @player.check_sum
-    puts "#{@player.name}, ваши карты #{@player.cards.keys.join(', ')} . Сумма ваших очков #{@player.sum}"
+    puts ''
+    player.check_sum
+    puts "#{player.name}, ваши карты #{player.cards.keys.join(', ')} . Сумма ваших очков #{player.sum}"
   end
 
   def show_cards
     show_stats(@player)
     @dealer.check_sum
     puts "Карты дилера #{@dealer.cards.keys.join(', ')} . Сумма очков дилера #{@dealer.sum}"
+    puts ''
         
     if @player.sum > @dealer.sum
-      puts "Победил #{@player.name}"
       @player.get_money
+      puts "Победил #{@player.name}. В вашем банке #{@player.bank}"
+      
     elsif @player.sum < @dealer.sum
-      puts "Победил дилер"
       @dealer.get_money
+      puts "Победил дилер. В вашем банке #{@player.bank}"      
     else
-      puts "Ничья"
       @player.get_money
       @dealer.get_money
+      puts "Ничья. В вашем банке #{@player.bank}"
+    end
+  end
+
+  def dealers_move
+    puts 'Ходит дилер...'
+    puts ''
+    sleep 3
+    
+    @dealer.check_sum
+    if @dealer.sum < 17 
+      @dealer.get_cards(@card_deck, 1)
+      puts "Дилер взял карту"
+    else
+      puts "Дилер не взял карту"
     end
   end
 
