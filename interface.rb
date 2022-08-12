@@ -10,8 +10,22 @@ class Interface
 
   def run_interface
     puts 'Введите ваше имя'
-    player = Player.new(gets.chomp)
-    dealer = Dealer.new
+
+  	player = Player.new(gets.chomp)
+  	dealer = Dealer.new
+    card_deck = CardDeck.new
+
+    player.get_cards(card_deck, 2)
+    dealer.get_cards(card_deck, 2)
+
+    player.place_bet
+    dealer.place_bet
+
+    player.check_sum
+
+    puts "#{player.name}, ваши карты #{player.cards.keys.join(', ')} . Сумма ваших очков #{player.sum}." 
+    puts "Карты дилера **, ** . Сумма очков дилера **."
+
   end
 
 end
