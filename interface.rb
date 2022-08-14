@@ -86,8 +86,8 @@ class Interface
       @dealer.get_money
       puts "Победил дилер. В вашем банке #{@player.bank}"      
     else
-      @player.get_money
-      @dealer.get_money
+      @player.draw
+      @dealer.draw
       puts "Ничья. В вашем банке #{@player.bank}"
     end
   end
