@@ -17,8 +17,7 @@ class Player
   end
 
   def check_sum
-    s = 0
-    @cards.each_value { |value| s += value }
+    s = @cards.values.sum
     if s > 21 && @cards.has_value?(11)
       (s - 10) < 21 ? @sum = s - 10 : @sum = s
     else
@@ -27,6 +26,6 @@ class Player
   end
 
   def get_money
-    @bank += 10
+    @bank += 20
   end
 end
