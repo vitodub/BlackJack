@@ -28,4 +28,8 @@ class Player
   def get_money
     @bank += 20
   end
+  
+  def draw
+    @bank += 10
+  end
 end
