@@ -1,4 +1,4 @@
-lass Interface
+class Interface
   def call
     puts 'Введите ваше имя'
     @player_name = gets.chomp
