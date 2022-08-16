@@ -1,22 +1,31 @@
-class Interface
+lass Interface
   def call
     puts 'Введите ваше имя'
     @player_name = gets.chomp
+    @player = Player.new(@player_name)
+    @dealer = Dealer.new
+    @card_deck = CardDeck.new    
     
     loop do
       run_interface
+
       puts ''
+
+      if bank_is_empty? 
+        puts "Закончились деньги для игры. Игра окончена"
+        break
+      else
+        next
+      end
+      
       puts "#{@player.name}, хотите ли вы сыграть еще раз?"
       play_again = gets.chomp.downcase
       break if play_again == 'нет'
+      
     end
   end
 
   def run_interface
-    @player = Player.new(@player_name)
-    @dealer = Dealer.new
-    @card_deck = CardDeck.new
-
     @player.get_cards(@card_deck, 2)
     @dealer.get_cards(@card_deck, 2)
 
@@ -63,7 +72,9 @@ class Interface
 
       when 3
         show_cards
-    end                
+    end
+    @player.cards = {}
+    @dealer.cards = {}              
   end
 
   def show_stats(player)
@@ -85,7 +96,7 @@ class Interface
     elsif @player.sum < @dealer.sum || @player.sum > 21
       @dealer.get_money
       puts "Победил дилер. В вашем банке #{@player.bank}"      
-    else
+    elsif @player.sum == @dealer.sum || (@player.sum > 21 && @dealer.sum > 21)
       @player.draw
       @dealer.draw
       puts "Ничья. В вашем банке #{@player.bank}"
@@ -96,7 +107,7 @@ class Interface
     puts 'Ходит дилер...'
     puts ''
     sleep 3
-    
+
     @dealer.check_sum
     if @dealer.sum < 17 
       @dealer.get_cards(@card_deck, 1)
@@ -104,6 +115,10 @@ class Interface
     else
       puts "Дилер не взял карту"
     end
+  end
+
+  def bank_is_empty?
+    @player.bank <= 0 || @dealer.bank <= 0
   end
 
 end
